@@ -1,0 +1,41 @@
+<?php
+
+/**
+ * @file
+ * This module adds the CiviCRM menu to the top of every page.
+ */
+
+
+/**
+ * hook_block_info implementation
+ */
+function civicrm_menu_block_info() {
+    return array('civicrm_menu' => array('info' => 'CiviCRM Menu'));
+}
+
+/**
+ * hook_block_view implementation
+ */
+function civicrm_menu_block_view($delta = '') {
+    if (('civicrm_menu' !== $delta) || !user_access('access CiviCRM')) {
+        return;
+    }
+
+    if (!class_exists('CRM_Core_Smarty', false)) {
+        civicrm_initialize();
+    }
+
+    return array(
+        'subject' => null,
+        'content'
+            => CRM_Core_Smarty::singleton()->fetch('CRM/common/Navigation.tpl'),
+    );
+}
+
+
+/**
+ * Implementation of hook_civicrm_config
+ */
+function civicrm_menu_civicrm_config(&$config) {
+    CRM_Core_Smarty::singleton()->assign('buildNavigation', FALSE);
+}

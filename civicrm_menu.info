@@ -1,0 +1,7 @@
+name = CiviCRM menu
+description = Adds the CiviCRM menu to the top of every page.
+package = CWKB
+core = 7.x
+files[] = civicrm_menu.module
+
+dependencies[] = civicrm
